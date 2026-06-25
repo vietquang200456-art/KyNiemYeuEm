@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our 4-Year Romantic Journey</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0b0708;
+            overflow: hidden; 
+        }
+        .serif-font {
+            font-family: 'Cormorant Garamond', serif;
+        }
+        .page-section {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+            transform: scale(0.97);
+        }
+        .page-section.active-page {
+            opacity: 1;
+            pointer-events: auto;
+            transform: scale(1);
+        }
+        @keyframes pulseGlow {
+            0%, 100% { transform: scale(1); text-shadow: 0 0 12px rgba(244,63,94,0.6); }
+            50% { transform: scale(1.05); text-shadow: 0 0 25px rgba(244,63,94,0.9), 0 0 40px rgba(244,63,94,0.4); }
+        }
+        .heart-pulse {
+            animation: pulseGlow 2.5s infinite ease-in-out;
+        }
+        @keyframes rotateMusic {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .music-playing {
+            animation: rotateMusic 5s linear infinite;
+        }
+
+        /* Ẩn hoàn toàn thanh cuộn tâm thư */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;  
+            scrollbar-width: none;  
+        }
+
+        /* KHUNG ẢNH PHÁT SÁNG LUNG LINH */
+        .dreamy-card {
+            position: relative;
+            background: rgba(23, 18, 19, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(244, 63, 94, 0.2);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.6), inset 0 0 15px rgba(244, 63, 94, 0.05);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .dreamy-card:hover {
+            border-color: rgba(244, 63, 94, 0.6);
+            box-shadow: 0 0 35px rgba(244, 63, 94, 0.35), inset 0 0 20px rgba(244, 63, 94, 0.1);
+        }
+
+        /* Custom thanh trượt âm lượng */
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #f43f5e;
+            cursor: pointer;
+            box-shadow: 0 0 10px #f43f5e;
+        }
+        input[type="range"]::-moz-range-thumb {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #f43f5e;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 0 10px #f43f5e;
+        }
+    </style>
+</head>
+<body class="text-stone-200 relative antialiased selection:bg-rose-500/30 w-full h-screen">
+
+    <audio id="bgMusic" loop></audio>
+
+    <div class="fixed top-6 right-6 z-50 flex flex-col items-center gap-2.5">
+        <button id="musicBtn" class="w-10 h-10 bg-stone-950/60 backdrop-blur-md border border-stone-800/80 rounded-full flex items-center justify-center text-rose-400 hover:text-rose-300 transition-all duration-300 shadow-lg focus:outline-none">
+            <i id="musicIcon" class="fa-solid fa-music"></i>
+        </button>
+        <div class="w-16 bg-stone-950/60 backdrop-blur-md px-1.5 py-1 rounded-md border border-stone-800/80 flex items-center justify-center shadow-lg">
+            <input id="volumeSlider" type="range" min="0" max="1" step="0.05" value="0.6" class="w-full h-[3px] bg-stone-800 rounded-lg appearance-none cursor-pointer accent-rose-500 focus:outline-none">
+        </div>
+    </div>
+
+    <canvas id="heartCanvas" class="fixed top-0 left-0 w-full h-full pointer-events-none z-0"></canvas>
+
+    <div class="relative z-10 w-full h-full">
+
+        <section id="page-welcome" class="page-section active-page absolute inset-0 w-full h-full flex flex-col justify-center items-center px-4 md:px-8 py-12">
+            
+            <div class="text-center mb-10">
+                <span class="text-rose-400/80 font-medium tracking-widest text-xs md:text-sm uppercase block mb-2">Celebrating Our Journey</span>
+                <h1 class="serif-font text-5xl md:text-7xl font-light italic text-transparent bg-clip-text bg-gradient-to-r from-stone-100 via-rose-200 to-stone-300">
+                    4 Beautiful Years
+                </h1>
+                <div class="w-16 h-[1px] bg-rose-500/40 mx-auto mt-5"></div>
+            </div>
+
+            <div class="max-w-2xl w-full bg-stone-950/40 backdrop-blur-xl border border-stone-900 rounded-2xl p-8 md:p-11 shadow-2xl relative transition-all duration-700 hover:border-rose-500/20">
+                <div class="absolute top-4 left-4 text-stone-700 text-xs serif-font italic">IV</div>
+                <div class="absolute bottom-4 right-4 text-stone-700 text-xs serif-font italic">∞</div>
+
+                <div class="serif-font text-xl md:text-2xl text-rose-200/90 italic mb-6 text-center md:text-left">
+                    Gửi em, tình yêu của anh...
+                </div>
+
+                <div class="space-y-6 text-stone-300/90 leading-relaxed text-sm md:text-base font-light text-justify max-h-[38vh] overflow-y-auto pr-1 no-scrollbar">
+                    <p>
+                        Bốn năm không phải là một khoảng thời gian quá dài, nhưng nó hoàn toàn đủ để anh biết rằng cuộc sống của mình không thể thiếu em. Cảm ơn em đã luôn ở bên cạnh, cùng anh bước qua những ngày nắng rực rỡ và cả những ngày giông bão âm thầm.
+                    </p>
+                    <p>
+                        Anh trân trọng từng khoảnh khắc nhỏ: nụ cười của em khi ăn món mình thích, cái nắm tay ấm áp giữa phố đông, và cả những lúc chúng mình lặng im bên nhau mà chẳng cần thành lời. Sự dịu dàng, kiên nhẫn và bao dung của em chính là ngôi nhà bình yên nhất mà anh luôn muốn trở về.
+                    </p>
+                    <p>
+                        Hành trình 4 năm qua chỉ là chương mở đầu. Anh hy vọng những năm tháng tiếp theo, chúng mình vẫn sẽ tiếp tục cùng nhau học cách yêu, cùng nhau trưởng thành và viết tiếp câu chuyện hạnh phúc này. Cảm ơn em vì đã là một phần tuyệt vời nhất trong cuộc đời anh.
+                    </p>
+                </div>
+
+                <div class="mt-8 pt-5 border-t border-stone-900 flex justify-between items-center">
+                    <span class="serif-font italic text-stone-400 text-sm">Thương em nhiều hơn mỗi ngày,</span>
+                    <span class="serif-font font-semibold text-rose-400 tracking-wider text-lg">[Tên của bạn]</span>
+                </div>
+            </div>
+
+            <div class="mt-10 text-center">
+                <button id="btn-to-memories" class="inline-flex flex-col items-center group text-stone-500 hover:text-rose-400 transition-colors duration-300 focus:outline-none">
+                    <span class="text-[10px] tracking-widest uppercase mb-2 text-stone-500 group-hover:text-rose-400/80 transition-colors">Xem lại kỷ niệm</span>
+                    <i class="fa-solid fa-chevron-right text-xs animate-bounce"></i>
+                </button>
+            </div>
+        </section>
+
+        <section id="page-memories" class="page-section hidden absolute inset-0 w-full h-full flex flex-col justify-center items-center px-4 md:px-8 py-12">
+            
+            <div class="text-center mb-6">
+                <i class="fa-regular fa-star text-rose-400/60 text-xl mb-2.5 block animate-pulse"></i>
+                <h2 class="serif-font text-3xl md:text-5xl font-light text-stone-100 tracking-wide">Khoảnh Khắc Của Chúng Ta</h2>
+                <p class="text-[10px] text-stone-500 mt-2 tracking-widest uppercase">A visual timeline of our favorite chapters</p>
+            </div>
+
+            <div id="photoGrid" class="w-full max-w-7xl flex flex-row overflow-x-hidden space-x-6 py-6 select-none items-center">
+            </div>
+
+            <div class="mt-8 text-center">
+                <button id="btn-to-final" class="inline-flex flex-col items-center group text-stone-500 hover:text-rose-400 transition-colors duration-300 focus:outline-none">
+                    <span class="text-[10px] tracking-widest uppercase mb-2 text-stone-500 group-hover:text-rose-400/80 transition-colors">Lời gửi gắm sau cùng</span>
+                    <i class="fa-solid fa-chevron-right text-xs animate-bounce"></i>
+                </button>
+            </div>
+        </section>
+
+        <section id="page-final" class="page-section hidden absolute inset-0 w-full h-full flex flex-col justify-center items-center text-center px-4">
+            <div class="w-20 h-[1px] bg-gradient-to-r from-transparent via-rose-500/30 to-transparent mb-12"></div>
+            
+            <div class="relative z-10">
+                <div class="heart-pulse text-rose-600/90 text-6xl md:text-7xl mb-8 inline-block">
+                    <i class="fa-solid fa-heart"></i>
+                </div>
+                
+                <h2 class="serif-font text-4xl md:text-7xl font-bold tracking-wide text-transparent bg-clip-text bg-gradient-to-b from-stone-100 via-rose-100 to-rose-300">
+                    Tôi yêu em rất nhiều!
+                </h2>
+                
+                <p class="text-stone-500 text-xs uppercase tracking-widest mt-6 block">
+                    Yesterday • Today • Forever & Always
+                </p>
+            </div>
+
+            <footer class="absolute bottom-6 text-stone-600 text-[10px] font-light tracking-wider">
+                © 2026 — Designed with love for her.
+            </footer>
+        </section>
+
+    </div>
+
+    <script>
+        // Điều khiển nhạc
+        const bgMusic = document.getElementById('bgMusic');
+        const musicBtn = document.getElementById('musicBtn');
+        const musicIcon = document.getElementById('musicIcon');
+        const volumeSlider = document.getElementById('volumeSlider');
+        let isMusicPlaying = false;
+
+        bgMusic.src = "Music/" + encodeURIComponent("Nơi Này Có Anh.mp3"); 
+        bgMusic.volume = volumeSlider.value; 
+
+        function playMusic() {
+            if (!isMusicPlaying) {
+                bgMusic.play().then(() => {
+                    isMusicPlaying = true;
+                    musicIcon.className = "fa-solid fa-compact-disc music-playing";
+                }).catch(err => {
+                    console.log("Chờ tương tác người dùng.");
+                });
+            }
+        }
+
+        document.addEventListener('click', playMusic, { once: true });
+        document.addEventListener('touchstart', playMusic, { once: true });
+
+        musicBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); 
+            if (isMusicPlaying) {
+                bgMusic.pause();
+                isMusicPlaying = false;
+                musicIcon.className = "fa-solid fa-music";
+            } else {
+                bgMusic.play().then(() => {
+                    isMusicPlaying = true;
+                    musicIcon.className = "fa-solid fa-compact-disc music-playing";
+                });
+            }
+        });
+
+        volumeSlider.addEventListener('input', (e) => {
+            bgMusic.volume = e.target.value;
+        });
+        volumeSlider.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+
+        // Mảng ảnh gốc
+        const originalImageUrls = [
+            "Images/Hinh3.jpg", "Images/Hinh4.jpg", "Images/Hinh5.jpg",
+            "Images/Hinh6.jpg", "Images/Hinh7.jpg", "Images/Hinh8.jpg", "Images/Hinh9.jpg", "Images/Hinh10.jpg",
+            "Images/Hinh11.jpg", "Images/Hinh12.jpg", "Images/Hinh13.jpg", "Images/Hinh14.jpg", "Images/Hinh15.jpg",
+            "Images/Hinh16.jpg", "Images/Hinh17.jpg", "Images/Hinh18.jpg", "Images/Hinh19.jpg", "Images/Hinh20.jpg",
+            "Images/Hinh21.jpg", "Images/Hinh22.jpg", "Images/Hinh23.jpg", "Images/Hinh24.jpg", "Images/Hinh25.jpg",
+            "Images/Hinh26.jpg", "Images/Hinh27.jpg", "Images/Hinh28.jpg", "Images/Hinh29.jpg", "Images/Hinh30.jpg",
+            "Images/Hinh31.jpg", "Images/Hinh32.jpg", "Images/Hinh33.jpg", "Images/Hinh34.jpg", "Images/Hinh35.jpg",
+            "Images/Hinh36.jpg", "Images/Hinh37.jpg", "Images/Hinh38.jpg", "Images/Hinh39.jpg", "Images/Hinh40.jpg",
+            "Images/Hinh41.jpg", "Images/Hinh42.jpg", "Images/Hinh43.jpg", "Images/Hinh44.jpg", "Images/Hinh45.jpg",
+            "Images/Hinh46.jpg", "Images/Hinh47.jpg", "Images/Hinh48.jpg", "Images/Hinh49.jpg", "Images/Hinh50.jpg",
+            "Images/Hinh51.jpg", "Images/Hinh52.jpg", "Images/Hinh53.jpg", "Images/Hinh54.jpg", "Images/Hinh55.jpg",
+            "Images/Hinh56.jpg", "Images/Hinh57.jpg", "Images/Hinh58.jpg","Images/Hinh59.jpg", "Images/Hinh60.jpg", 
+            "Images/Hinh61.jpg","Images/Hinh62.jpg"
+        ];
+        
+        const photoGrid = document.getElementById('photoGrid');
+        originalImageUrls.forEach((url, index) => {
+            const gridItem = document.createElement('div');
+            // Đặt kích thước khung ngoài cố định: rộng w-72 (hoặc md:w-80)
+            gridItem.className = "flex-none overflow-hidden rounded-2xl dreamy-card w-72 md:w-80 group";
+            
+            // THAY ĐỔI QUAN TRỌNG: 
+            // 1. Thêm lớp `aspect-[3/4]` để ép tỉ lệ khung hình đứng hoàn hảo và bằng chằn chặn nhau.
+            // 2. Thêm lớp `object-cover w-full h-full` vào thẻ <img> để ép nội dung ảnh lấp đầy 100% diện tích thẻ img mà không bị bóp méo.
+            gridItem.innerHTML = `
+                <div class="relative overflow-hidden cursor-pointer w-full aspect-[3/4] bg-stone-950">
+                    <img src="${url}" alt="Memory ${index + 1}" loading="lazy" class="w-full h-full object-cover object-center transition-transform duration-1000 ease-out group-hover:scale-105 filter brightness-95 group-hover:brightness-100">
+                    <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-4">
+                        <span class="text-xs serif-font italic text-rose-200 tracking-wider">Khoảnh khắc ngọt ngào #${index + 1}</span>
+                    </div>
+                </div>
+            `;
+            photoGrid.appendChild(gridItem);
+        });
+
+        // Tự động cuộn mượt và dừng ở ảnh cuối
+        const welcomePage = document.getElementById('page-welcome');
+        const memoriesPage = document.getElementById('page-memories');
+        const finalPage = document.getElementById('page-final');
+
+        let scrollPosition = 0;
+        let scrollSpeed = 2.65; 
+        let animationFrameId = null;
+
+        function scrollPhotos() {
+            scrollPosition += scrollSpeed;
+            photoGrid.scrollLeft = scrollPosition;
+            
+            const maxScrollLeft = photoGrid.scrollWidth - photoGrid.clientWidth;
+            
+            if (scrollPosition >= maxScrollLeft) {
+                photoGrid.scrollLeft = maxScrollLeft; 
+                cancelAnimationFrame(animationFrameId);
+                animationFrameId = null;
+                return;
+            }
+            
+            animationFrameId = requestAnimationFrame(scrollPhotos);
+        }
+
+        document.getElementById('btn-to-memories').addEventListener('click', () => {
+            welcomePage.classList.remove('active-page');
+            setTimeout(() => {
+                welcomePage.classList.add('hidden');
+                memoriesPage.classList.remove('hidden');
+                setTimeout(() => {
+                    memoriesPage.classList.add('active-page');
+                    if(!animationFrameId) {
+                        scrollPosition = 0; 
+                        scrollPhotos();
+                    }
+                }, 50);
+            }, 1000);
+        });
+
+        document.getElementById('btn-to-final').addEventListener('click', () => {
+            if(animationFrameId) {
+                cancelAnimationFrame(animationFrameId);
+                animationFrameId = null;
+            }
+            memoriesPage.classList.remove('active-page');
+            setTimeout(() => {
+                memoriesPage.classList.add('hidden');
+                finalPage.classList.remove('hidden');
+                setTimeout(() => {
+                    finalPage.classList.add('active-page');
+                }, 50);
+            }, 1000);
+        });
+
+        // Hiệu ứng tim bay
+        const canvas = document.getElementById("heartCanvas");
+        const ctx = canvas.getContext("2d");
+
+        function resize(){
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resize();
+        window.addEventListener('resize', resize);
+
+        class Heart {
+            constructor(){
+                this.reset();
+                this.y = Math.random() * canvas.height;
+            }
+
+            reset(){
+                this.x = Math.random() * canvas.width;
+                this.y = canvas.height + Math.random() * canvas.height;
+                this.size = Math.random() * 18 + 8;
+                this.speed = Math.random() * 1.5 + 0.4;
+                this.alpha = Math.random() * 0.5 + 0.2;
+                this.swing = Math.random() * 2;
+                this.color = Math.random() > 0.5 ? '#ff4f88' : '#ff7ca8';
+            }
+
+            draw(){
+                ctx.save();
+                ctx.translate(this.x, this.y);
+
+                const scale = this.size / 20;
+                ctx.scale(scale, scale);
+
+                ctx.shadowBlur = 25;
+                ctx.shadowColor = this.color;
+                ctx.fillStyle = this.color;
+                ctx.globalAlpha = this.alpha;
+
+                ctx.beginPath();
+                ctx.moveTo(0, 0);
+                ctx.bezierCurveTo(0, -3, -10, -15, -20, -15);
+                ctx.bezierCurveTo(-40, -15, -40, 15, -40, 15);
+                ctx.bezierCurveTo(-40, 35, -20, 55, 0, 70);
+                ctx.bezierCurveTo(20, 55, 40, 35, 40, 15);
+                ctx.bezierCurveTo(40, 15, 40, -15, 20, -15);
+                ctx.bezierCurveTo(10, -15, 0, -3, 0, 0);
+                ctx.closePath();
+                ctx.fill();
+
+                ctx.restore();
+            }
+
+            update(){
+                this.y -= this.speed;
+                this.x += Math.sin(this.y * 0.01) * this.swing;
+
+                if(this.y < -100){
+                    this.reset();
+                }
+                this.draw();
+            }
+        }
+
+        const hearts = [];
+        for(let i = 0; i < 85; i++){
+            hearts.push(new Heart());
+        }
+
+        function animate(){
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            hearts.forEach(h => h.update());
+            requestAnimationFrame(animate);
+        }
+        animate();
+    </script>
+</body>
+</html>
